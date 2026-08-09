@@ -6,3 +6,4 @@ langchain-text-splitters
 langchain-groq
 faiss-cpu
 fastembed
+gunicorn
