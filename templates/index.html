@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{{ owner_name }} — AI Portfolio</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+
+  <main class="hero">
+    <div class="badge">{{ owner_name[0] | upper }}</div>
+    <p class="greeting">Hey, I'm {{ owner_name }} 👋</p>
+    <h1 class="title">AI Portfolio</h1>
+
+    <div class="avatar-wrap">
+      <img src="{{ url_for('static', filename='avatar.png') }}"
+           alt="{{ owner_name }}"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+      <div class="avatar-fallback">{{ owner_name[0] | upper }}</div>
+    </div>
+
+    <div class="quick-actions">
+      <button class="pill" data-prompt="Tell me about yourself">😊 Me</button>
+      <button class="pill" data-prompt="What projects have you worked on?">💼 Projects</button>
+      <button class="pill" data-prompt="What are your technical skills?">⚡ Skills</button>
+      <button class="pill" data-prompt="How can I get in touch with you?">📣 Contact</button>
+    </div>
+
+    <div class="chat-log" id="chat-log"></div>
+  </main>
+
+  <footer class="input-bar">
+    <form class="input-inner" id="chat-form">
+      <input
+        type="text"
+        id="chat-input"
+        placeholder="Ask me anything..."
+        autocomplete="off"
+        required
+      />
+      <button type="submit" class="send-btn" aria-label="Send">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 19V5M12 5L5 12M12 5L19 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </form>
+  </footer>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

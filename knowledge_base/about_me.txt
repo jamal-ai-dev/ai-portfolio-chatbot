@@ -1,0 +1,76 @@
+# About Me
+
+Muhammad Jamal Nasir is an AI Engineering student pursuing a BSAI (Bachelor of Science in
+Artificial Intelligence), working as a Python & AI Engineer and Generative AI/LLM Specialist.
+He has a solid foundation in Python, Data Structures, and scalable AI system design, along
+with hands-on experience in C#, OOP, SQL, and DBMS. He builds intelligent automation and
+FastAPI backends, and also creates AI-powered luxury product visuals and videos through his
+studio, Jamal Graphics.
+
+# Skills
+
+Languages: Python, C#, SQL
+
+Frameworks/Libraries: FastAPI, Flask, Django, Pandas, NumPy, Scikit-Learn, OpenCV, MediaPipe
+
+AI/LLM: OpenAI API, Claude, LangChain, RAG (Retrieval-Augmented Generation), Agentic AI
+Development, Generative AI, Large Language Models (LLM), AI Literacy
+
+Other: Automation, Data Structures, OOP, DBMS, Web Scraping, .NET Framework, MS SQL Server
+
+Tools: Git/GitHub, Microsoft Office (Word Associate certified)
+
+# Certifications
+
+- CLAUDE 101 -- Anthropic (Jul 2026)
+- Getting Started with Generative AI -- IBM (Jul 2026)
+- ACT AI -- National AI Training Programme -- AI SkillBridge (Jul 2026) -- Generative AI, Agentic AI Development
+- AI Fluency: Framework & Foundations -- Anthropic (Jul 2026)
+- Foundational C# with Microsoft -- freeCodeCamp (Jun 2026)
+- Microsoft Office Specialist: Word Associate (Word 2019) -- Microsoft (Nov 2024)
+- AWS AI Practitioner Learning Plan -- AWS Training & Certification (Completed Aug 2026)
+
+# Projects
+
+1. FlyRank ML Internship
+   Machine learning internship work and experiments.
+   Tech: Python, Jupyter Notebook
+   Link: https://github.com/jamal-ai-dev/flyrank-ml-internship
+
+2. AI Study Buddy
+   AI-powered study assistant with intelligent note summarization, flashcards, MCQ
+   generation, AI tutoring, and viva preparation.
+   Tech: React, TypeScript, Vite
+   Link: https://github.com/jamal-ai-dev/AI-Study-Buddy
+
+3. Store Management System (myECom)
+   Desktop-based Store Management & POS system with inventory management, sales
+   processing, and invoicing.
+   Tech: C#, Windows Forms (.NET Framework), Microsoft SQL Server
+   Link: https://github.com/jamal-ai-dev/Store-Management-System---myECom
+
+4. AI Hand and Finger Detection
+   Real-time hand and finger detection with accurate hand landmark tracking.
+   Tech: Python, OpenCV, MediaPipe
+   Link: https://github.com/jamal-ai-dev/AI-Hand-and-Finger-Detection
+
+5. AI Age Detection
+   Desktop application for detecting human age groups.
+   Tech: Python, OpenCV DNN
+   Link: https://github.com/jamal-ai-dev/AI-Age-Detection
+
+# Goals
+
+Jamal's primary goals include securing an AI/ML internship or full-time role at a top tech
+company, deepening expertise in Agentic AI, RAG systems, and LangChain-based LLM development,
+and building a strong, diverse GitHub portfolio that reflects both AI engineering and
+practical software development skills. He also aims to grow his freelance AI/automation
+practice on Upwork and expand Jamal Graphics -- his AI-powered creative content studio -- while
+continuing to build leadership experience through AI Society NTU.
+
+# Contact
+
+Email: jamalnasir0112@gmail.com
+Phone: +92 325 0852828
+LinkedIn: linkedin.com/in/mjamalnasir0112
+GitHub: github.com/jamal-ai-dev
