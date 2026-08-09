@@ -4,6 +4,10 @@ A personal **RAG (Retrieval-Augmented Generation) chatbot**, built from scratch,
 
 Not a no-code tool. Not a ChatGPT wrapper. A real RAG pipeline I built and understand end to end.
 
+🔗 **Live demo:** [ai-portfolio-chatbot-9pha.onrender.com](https://ai-portfolio-chatbot-9pha.onrender.com)
+
+> Hosted on Render's free tier, so it may take 30–50 seconds to wake up if it hasn't been visited recently. Give it a moment on the first load.
+
 ## How it works
 
 1. My info lives as plain text in `knowledge_base/`.
@@ -25,7 +29,7 @@ Not a no-code tool. Not a ChatGPT wrapper. A real RAG pipeline I built and under
 ## Setup
 
 ```bash
-git clone https://github.com/<your-username>/ai-portfolio-chatbot.git
+git clone https://github.com/jamal-ai-dev/ai-portfolio-chatbot.git
 cd ai-portfolio-chatbot
 
 python -m venv venv
@@ -42,7 +46,7 @@ pip install -r requirements.txt
 
 2. Replace the placeholder text in `knowledge_base/about_me.txt` with your real bio, skills, projects, and contact info. Add more `.txt` files to `knowledge_base/` if you want to split it up.
 
-3. (Optional) Add your own photo as `static/avatar.jpg`.
+3. Add your own photo as `static/avatar.png`.
 
 4. Build the vector index:
 
@@ -71,7 +75,7 @@ ai-portfolio-chatbot/
 ├── static/
 │   ├── style.css
 │   ├── script.js
-│   └── avatar.jpg          # Your photo (add your own)
+│   └── avatar.png          # Your photo (add your own)
 ├── requirements.txt
 └── .env.example
 ```
@@ -86,4 +90,12 @@ python -m rag.ingest
 
 ## Deployment
 
-Works well on any host that supports Python + Flask (Render, Railway, Fly.io, etc.). Just set `GROQ_API_KEY` and `OWNER_NAME` as environment variables and run `python -m rag.ingest` once during the build step before starting `app.py`.
+Deployed on [Render](https://render.com)'s free tier as a Web Service:
+
+- **Build Command:** `pip install -r requirements.txt && python -m rag.ingest`
+- **Start Command:** `gunicorn app:app --bind 0.0.0.0:$PORT`
+- **Environment variables:** `GROQ_API_KEY`, `OWNER_NAME`
+
+The build command re-runs `rag.ingest` on every deploy so the FAISS index is always rebuilt from the latest `knowledge_base/` content — no need to commit the index itself.
+
+This same setup works on any host that supports Python (Railway, Fly.io, etc.) with minor adjustments to the start command.
