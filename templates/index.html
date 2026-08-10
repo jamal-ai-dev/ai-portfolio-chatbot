@@ -4,14 +4,19 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>{{ owner_name }} — AI Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;1,500;1,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
 <body>
+  <div class="grid-overlay" aria-hidden="true"></div>
 
   <main class="hero">
-    <div class="badge">{{ owner_name[0] | upper }}</div>
-    <p class="greeting">Hey, I'm {{ owner_name }} 👋</p>
-    <h1 class="title">AI Portfolio</h1>
+    <div class="status-bar">
+      <span class="status-dot" aria-hidden="true"></span>
+      <span>SYSTEM ONLINE — {{ owner_name|upper }}.AI</span>
+    </div>
 
     <div class="avatar-wrap">
       <img src="{{ url_for('static', filename='avatar.png') }}"
@@ -20,28 +25,32 @@
       <div class="avatar-fallback">{{ owner_name[0] | upper }}</div>
     </div>
 
-    <div class="quick-actions">
-      <button class="pill" data-prompt="Tell me about yourself">😊 Me</button>
-      <button class="pill" data-prompt="What projects have you worked on?">💼 Projects</button>
-      <button class="pill" data-prompt="What are your technical skills?">⚡ Skills</button>
-      <button class="pill" data-prompt="How can I get in touch with you?">📣 Contact</button>
-    </div>
+    <p class="eyebrow">AI Engineer &middot; RAG Builder &middot; Jamal Graphics</p>
+    <h1 class="title">{{ owner_name }}</h1>
+
+    <nav class="quick-actions" aria-label="Quick questions">
+      <button class="tag" data-prompt="Tell me about yourself">~/me</button>
+      <button class="tag" data-prompt="What projects have you worked on?">~/projects</button>
+      <button class="tag" data-prompt="What are your technical skills?">~/skills</button>
+      <button class="tag" data-prompt="How can I get in touch with you?">~/contact</button>
+    </nav>
 
     <div class="chat-log" id="chat-log"></div>
   </main>
 
   <footer class="input-bar">
     <form class="input-inner" id="chat-form">
+      <span class="prompt-glyph" aria-hidden="true">&gt;</span>
       <input
         type="text"
         id="chat-input"
-        placeholder="Ask me anything..."
+        placeholder="ask me anything"
         autocomplete="off"
         required
       />
       <button type="submit" class="send-btn" aria-label="Send">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 19V5M12 5L5 12M12 5L19 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
     </form>
