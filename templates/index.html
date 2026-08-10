@@ -4,14 +4,334 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>{{ owner_name }} — AI Portfolio</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;1,500;1,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #0e0d0b;
+  --surface: rgba(23, 21, 17, 0.7);
+  --surface-solid: #18160f;
+  --border: #2a271f;
+  --accent-gold: #c9a227;
+  --accent-gold-dim: #8a7220;
+  --accent-gold-bright: #e0b933;
+  --accent-teal: #4fa69a;
+  --text-primary: #f3efe4;
+  --text-muted: #8d8779;
+  --font-display: "Fraunces", serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+html { background: var(--bg); }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  padding-bottom: 140px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.grid-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(201, 162, 39, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201, 162, 39, 0.05) 1px, transparent 1px);
+  background-size: 42px 42px;
+  -webkit-mask-image: radial-gradient(ellipse 700px 600px at 50% 0%, black, transparent 75%);
+  mask-image: radial-gradient(ellipse 700px 600px at 50% 0%, black, transparent 75%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: -12%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 620px;
+  height: 520px;
+  background: radial-gradient(ellipse, rgba(201, 162, 39, 0.16), transparent 65%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 44px 20px 20px;
+  text-align: center;
+}
+
+.status-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 16px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  backdrop-filter: blur(6px);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 40px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-teal);
+  animation: pulse 2.4s ease-out infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(79, 166, 154, 0.55); }
+  70% { box-shadow: 0 0 0 7px rgba(79, 166, 154, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(79, 166, 154, 0); }
+}
+
+.avatar-wrap {
+  width: 168px;
+  height: 168px;
+  margin: 0 auto 26px;
+  position: relative;
+  filter: drop-shadow(0 0 34px rgba(201, 162, 39, 0.2));
+}
+
+.avatar-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.avatar-fallback {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-solid);
+  color: var(--accent-gold);
+  font-family: var(--font-display);
+  font-size: 56px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  margin-bottom: 12px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 54px;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  margin-bottom: 34px;
+}
+
+.quick-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 34px;
+}
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 16px;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.tag:hover, .tag:focus-visible {
+  color: var(--accent-gold);
+  border-color: var(--accent-gold-dim);
+  transform: translateY(-1px);
+}
+
+.chat-log {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  text-align: left;
+  margin-top: 4px;
+}
+
+.bubble {
+  max-width: 84%;
+  font-size: 14.5px;
+  line-height: 1.65;
+}
+
+.bubble.user {
+  align-self: flex-end;
+  font-family: var(--font-mono);
+  color: var(--accent-gold);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 11px 15px;
+}
+
+.bubble.bot {
+  align-self: flex-start;
+  border-left: 2px solid var(--accent-teal);
+  padding: 2px 0 2px 15px;
+  color: var(--text-primary);
+}
+
+.bot-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--accent-teal);
+  margin-bottom: 5px;
+}
+
+.bot-text {
+  display: block;
+  white-space: pre-wrap;
+}
+
+.bubble.loading .bot-label { color: var(--text-muted); }
+
+.dots span {
+  display: inline-block;
+  animation: blink 1.4s infinite;
+  opacity: 0.2;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.dots span:nth-child(2) { animation-delay: 0.2s; }
+.dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes blink {
+  0%, 80%, 100% { opacity: 0.2; }
+  40% { opacity: 1; }
+}
+
+.input-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, var(--bg) 55%, transparent);
+  padding: 30px 20px 24px;
+  z-index: 2;
+}
+
+.input-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 4px 8px 4px 16px;
+  transition: border-color 0.15s ease;
+}
+
+.input-inner:focus-within { border-color: var(--accent-gold-dim); }
+
+.prompt-glyph {
+  font-family: var(--font-mono);
+  color: var(--accent-gold);
+  font-size: 15px;
+}
+
+#chat-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 14.5px;
+  color: var(--text-primary);
+  padding: 13px 0;
+  caret-color: var(--accent-gold);
+}
+
+#chat-input::placeholder { color: var(--text-muted); }
+
+.send-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: var(--accent-gold);
+  color: #14120c;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s ease;
+}
+
+.send-btn:hover { background: var(--accent-gold-bright); }
+
+button:focus-visible, input:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+  .title { font-size: 40px; }
+  .avatar-wrap { width: 132px; height: 132px; }
+  .tag { font-size: 12px; padding: 8px 12px; }
+  .status-bar { font-size: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status-dot { animation: none; }
+  .dots span { animation: none; opacity: 1; }
+}
+</style>
 </head>
 <body>
+  <div class="grid-overlay" aria-hidden="true"></div>
 
   <main class="hero">
-    <div class="badge">{{ owner_name[0] | upper }}</div>
-    <p class="greeting">Hey, I'm {{ owner_name }} 👋</p>
-    <h1 class="title">AI Portfolio</h1>
+    <div class="status-bar">
+      <span class="status-dot" aria-hidden="true"></span>
+      <span>SYSTEM ONLINE — {{ owner_name|upper }}.AI</span>
+    </div>
 
     <div class="avatar-wrap">
       <img src="{{ url_for('static', filename='avatar.png') }}"
@@ -20,33 +340,120 @@
       <div class="avatar-fallback">{{ owner_name[0] | upper }}</div>
     </div>
 
-    <div class="quick-actions">
-      <button class="pill" data-prompt="Tell me about yourself">😊 Me</button>
-      <button class="pill" data-prompt="What projects have you worked on?">💼 Projects</button>
-      <button class="pill" data-prompt="What are your technical skills?">⚡ Skills</button>
-      <button class="pill" data-prompt="How can I get in touch with you?">📣 Contact</button>
-    </div>
+    <p class="eyebrow">AI Engineer &middot; RAG Builder &middot; Jamal Graphics</p>
+    <h1 class="title">{{ owner_name }}</h1>
+
+    <nav class="quick-actions" aria-label="Quick questions">
+      <button class="tag" data-prompt="Tell me about yourself">~/me</button>
+      <button class="tag" data-prompt="What projects have you worked on?">~/projects</button>
+      <button class="tag" data-prompt="What are your technical skills?">~/skills</button>
+      <button class="tag" data-prompt="How can I get in touch with you?">~/contact</button>
+    </nav>
 
     <div class="chat-log" id="chat-log"></div>
   </main>
 
   <footer class="input-bar">
     <form class="input-inner" id="chat-form">
+      <span class="prompt-glyph" aria-hidden="true">&gt;</span>
       <input
         type="text"
         id="chat-input"
-        placeholder="Ask me anything..."
+        placeholder="ask me anything"
         autocomplete="off"
         required
       />
       <button type="submit" class="send-btn" aria-label="Send">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 19V5M12 5L5 12M12 5L19 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
     </form>
   </footer>
 
-  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <script>
+const chatLog = document.getElementById("chat-log");
+const form = document.getElementById("chat-form");
+const input = document.getElementById("chat-input");
+const quickButtons = document.querySelectorAll(".tag");
+
+function addUserMessage(text) {
+  const bubble = document.createElement("div");
+  bubble.className = "bubble user";
+  bubble.textContent = `> ${text}`;
+  chatLog.appendChild(bubble);
+  bubble.scrollIntoView({ behavior: "smooth", block: "end" });
+  return bubble;
+}
+
+function addBotMessage(text, opts) {
+  opts = opts || {};
+  const loading = !!opts.loading;
+  const bubble = document.createElement("div");
+  bubble.className = "bubble bot" + (loading ? " loading" : "");
+
+  const label = document.createElement("span");
+  label.className = "bot-label";
+  label.textContent = "jamal-ai@rag:~$";
+  bubble.appendChild(label);
+
+  if (loading) {
+    const dots = document.createElement("span");
+    dots.className = "dots";
+    dots.innerHTML = "<span>.</span><span>.</span><span>.</span>";
+    bubble.appendChild(dots);
+  } else {
+    const body = document.createElement("div");
+    body.className = "bot-text";
+    body.textContent = text;
+    bubble.appendChild(body);
+  }
+
+  chatLog.appendChild(bubble);
+  bubble.scrollIntoView({ behavior: "smooth", block: "end" });
+  return bubble;
+}
+
+async function sendMessage(text) {
+  const trimmed = text.trim();
+  if (!trimmed) return;
+
+  addUserMessage(trimmed);
+  input.value = "";
+
+  const loadingBubble = addBotMessage("", { loading: true });
+
+  try {
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: trimmed }),
+    });
+    const data = await res.json();
+
+    loadingBubble.remove();
+
+    if (data.error) {
+      addBotMessage("\u26a0 " + data.error);
+    } else {
+      addBotMessage(data.reply);
+    }
+  } catch (err) {
+    loadingBubble.remove();
+    addBotMessage("\u26a0 Could not reach the server. Is it running?");
+  }
+}
+
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  sendMessage(input.value);
+});
+
+quickButtons.forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    sendMessage(btn.dataset.prompt);
+  });
+});
+  </script>
 </body>
 </html>
